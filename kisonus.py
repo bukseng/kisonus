@@ -1,5 +1,6 @@
 import tkinter
 import tkinter.font as tkFont
+from tkinter.filedialog import askopenfilename
 from tkinter import *
 import keyboard
 import pygame
@@ -7,6 +8,7 @@ import pygame
 
 audio_map = {
     'None': 'None',
+    'Load From Computer': None,
     'Mechanical A': 'res/mech_00.wav',
     'Mechanical B': 'res/mech_01.wav',
     'Mechanical C': 'res/mech_02.wav',
@@ -30,6 +32,9 @@ def play_sound(audio_file, volume=1.0):
     audio.set_volume(volume)
     audio.play()
 
+def custom_sound():
+    if chosen.get() == 'Load From Computer':
+        audio_map['Load From Computer'] = askopenfilename()
 
 def on_key_press(event):
     if current_sound != 'None':
@@ -38,6 +43,7 @@ def on_key_press(event):
   
 def changeSound(event):
     global current_sound
+    custom_sound()
     current_sound = audio_map[chosen.get()]            
 
 current_sound = 'None'
@@ -53,7 +59,7 @@ root.resizable(0,0)
 
 
 options = [
-    'None', 'Mechanical A','Mechanical B','Mechanical C','Mechanical D','Mechanical E','Mechanical F','Mechanical G',
+    'None', 'Load From Computer', 'Mechanical A','Mechanical B','Mechanical C','Mechanical D','Mechanical E','Mechanical F','Mechanical G',
     'Vintage A', 'Vintage B', 'Vintage C', 'Typewriter A', 'Typewriter B', 'Typewriter C', 'Laptop A', 'Laptop B'
 ]
 
@@ -63,5 +69,6 @@ chosen.set('None')
 drop = OptionMenu( root, chosen, *options, command=changeSound)
 drop.config(font=tkFont.Font(family='Calibri', size=16))
 drop.pack()
+
 
 root.mainloop()
