@@ -25,15 +25,16 @@ audio_map = {
     'Laptop B': 'res/laptop_01.wav'
 }
 
+mixer.init()
+
+
 def load_audios(audio_map):
-    mixer.init()
     return {audio_name: mixer.Sound(audio_file) if audio_file else None for audio_name, audio_file in audio_map.items()}
 
 audios = load_audios(audio_map)
 
 def custom_sound(event):
     if selected_sound.get() == 'Load From Computer':
-        mixer.init()
         try:
             audios['Load From Computer'] = mixer.Sound(askopenfilename())
         except:
